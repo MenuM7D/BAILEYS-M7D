@@ -169,8 +169,15 @@ connectToWhatsApp()
 - [رسائل الاتصال](#رسائل-الاتصال)
 - [رسائل التفاعل (Reactions)](#رسائل-التفاعل)
 - [الاستطلاعات](#رسائل-الاستطلاع)
-- [الأزرار التفاعلية](#الأزرار-التفاعلية)
-- [الرسائل الإعلامية](#الرسائل-الإعلامية)
+- [رسائل الأزرار](#رسائل-الأزرار)
+- [رسائل القوائم](#رسائل-القوائم)
+- [رسائل البطاقات](#رسائل-البطاقات)
+- [الرسائل التفاعلية](#الرسائل-التفاعلية)
+- [رسائل الدفع التفاعلية](#رسائل-الدفع-التفاعلية)
+- [رسائل الحالة مع المنشن](#رسائل-الحالة-مع-المنشن)
+- [رسائل المتجر](#رسائل-المتجر)
+- [رسائل المجموعة](#رسائل-المجموعة)
+- [ميزة أيقونة AI](#ميزة-أيقونة-ai)
 
 ### 🎬 الوسائط المتعددة
 - [إرسال الصور](#إرسال-الصور)
@@ -343,9 +350,384 @@ await sock.sendMessage(
 )
 ```
 
+### رسائل الأزرار
+
+```typescript
+await sock.sendMessage(
+    jid,
+    {
+        text: 'هذه رسالة بأزرار!',
+        footer: 'اختر أحد الخيارات',
+        buttons: [
+            {
+                buttonId: 'id1',
+                buttonText: { displayText: 'الزر الأول' }
+            },
+            {
+                buttonId: 'id2',
+                buttonText: { displayText: 'الزر الثاني' }
+            },
+            {
+                buttonId: 'id3',
+                buttonText: { displayText: 'الزر الثالث' }
+            }
+        ]
+    }
+)
+```
+
+### رسائل القوائم
+
+```typescript
+// تعمل فقط في المحادثات الخاصة
+await sock.sendMessage(
+    jid,
+    {
+        text: 'هذه قائمة خيارات!',
+        footer: 'اختر من القائمة',
+        title: 'عنوان القائمة',
+        buttonText: 'انقر لعرض القائمة',
+        sections: [
+            {
+                title: 'القسم الأول',
+                rows: [
+                    {
+                        title: 'الخيار 1',
+                        rowId: 'option1',
+                        description: 'وصف الخيار الأول'
+                    },
+                    {
+                        title: 'الخيار 2',
+                        rowId: 'option2',
+                        description: 'وصف الخيار الثاني'
+                    }
+                ]
+            },
+            {
+                title: 'القسم الثاني',
+                rows: [
+                    {
+                        title: 'الخيار 3',
+                        rowId: 'option3'
+                    },
+                    {
+                        title: 'الخيار 4',
+                        rowId: 'option4',
+                        description: 'وصف الخيار الرابع'
+                    }
+                ]
+            }
+        ]
+    }
+)
+```
+
+### رسائل البطاقات
+
+```typescript
+await sock.sendMessage(
+    jid,
+    {
+        text: 'نص الرسالة',
+        title: 'عنوان الرسالة',
+        subtitle: 'عنوان فرعي',
+        footer: 'تذييل الرسالة',
+        cards: [
+            {
+                image: { url: './image1.jpg' },
+                title: 'عنوان البطاقة الأولى',
+                body: 'محتوى البطاقة',
+                footer: 'تذييل البطاقة',
+                buttons: [
+                    {
+                        name: 'quick_reply',
+                        buttonParamsJson: JSON.stringify({
+                            display_text: 'رد سريع',
+                            id: 'ID1'
+                        })
+                    },
+                    {
+                        name: 'cta_url',
+                        buttonParamsJson: JSON.stringify({
+                            display_text: 'زيارة الموقع',
+                            url: 'https://example.com'
+                        })
+                    }
+                ]
+            },
+            {
+                video: { url: './video1.mp4' },
+                title: 'عنوان البطاقة الثانية',
+                body: 'محتوى البطاقة',
+                footer: 'تذييل البطاقة',
+                buttons: [
+                    {
+                        name: 'quick_reply',
+                        buttonParamsJson: JSON.stringify({
+                            display_text: 'رد سريع',
+                            id: 'ID2'
+                        })
+                    }
+                ]
+            }
+        ]
+    }
+)
+```
+
+### الرسائل التفاعلية
+
+```typescript
+await sock.sendMessage(
+    jid,
+    {
+        text: 'هذه رسالة تفاعلية!',
+        title: 'مرحباً',
+        subtitle: 'عنوان فرعي',
+        footer: 'تذييل الرسالة',
+        interactiveButtons: [
+            {
+                name: 'quick_reply',
+                buttonParamsJson: JSON.stringify({
+                    display_text: 'انقر هنا!',
+                    id: 'your_id'
+                })
+            },
+            {
+                name: 'cta_url',
+                buttonParamsJson: JSON.stringify({
+                    display_text: 'تابعني',
+                    url: 'https://m7d-platforms.vercel.app',
+                    merchant_url: 'https://m7d-platforms.vercel.app'
+                })
+            },
+            {
+                name: 'cta_copy',
+                buttonParamsJson: JSON.stringify({
+                    display_text: 'نسخ الرابط',
+                    copy_code: 'https://m7d-platforms.vercel.app'
+                })
+            },
+            {
+                name: 'cta_call',
+                buttonParamsJson: JSON.stringify({
+                    display_text: 'اتصل بي!',
+                    phone_number: '201220864180'
+                })
+            },
+            {
+                name: 'single_select',
+                buttonParamsJson: JSON.stringify({
+                    title: 'اختر خياراً',
+                    sections: [
+                        {
+                            title: 'القسم 1',
+                            highlight_label: 'تسمية مميزة',
+                            rows: [
+                                {
+                                    header: 'رأس 1',
+                                    title: 'عنوان 1',
+                                    description: 'وصف 1',
+                                    id: 'Id1'
+                                },
+                                {
+                                    header: 'رأس 2',
+                                    title: 'عنوان 2',
+                                    description: 'وصف 2',
+                                    id: 'Id2'
+                                }
+                            ]
+                        }
+                    ]
+                })
+            }
+        ]
+    }
+)
+```
+
+### رسائل الدفع التفاعلية
+
+#### رسالة دفع PIX
+
+```typescript
+await sock.sendMessage(
+    jid,
+    {
+        text: '',
+        interactiveButtons: [
+            {
+                name: 'payment_info',
+                buttonParamsJson: JSON.stringify({
+                    payment_settings: [{
+                        type: 'pix_static_code',
+                        pix_static_code: {
+                            merchant_name: 'M7D-DEV',
+                            key: 'example@m7d.com',
+                            key_type: 'EMAIL' // PHONE || EMAIL || CPF || EVP
+                        }
+                    }]
+                })
+            }
+        ]
+    }
+)
+```
+
+#### رسالة مراجعة الدفع
+
+```typescript
+await sock.sendMessage(
+    jid,
+    {
+        text: '',
+        interactiveButtons: [
+            {
+                name: 'review_and_pay',
+                buttonParamsJson: JSON.stringify({
+                    currency: 'EGP',
+                    total_amount: {
+                        value: '999999',
+                        offset: '100'
+                    },
+                    reference_id: '4XXXXXDV',
+                    type: 'physical-goods',
+                    order: {
+                        status: 'completed',
+                        subtotal: {
+                            value: '999999',
+                            offset: '100'
+                        },
+                        order_type: 'PAYMENT_REQUEST',
+                        items: [{
+                            retailer_id: 'retailer_id',
+                            name: 'اسم المنتج',
+                            amount: {
+                                value: '999999',
+                                offset: '100'
+                            },
+                            quantity: '1'
+                        }]
+                    }
+                })
+            }
+        ]
+    }
+)
+```
+
+### رسائل الحالة مع المنشن
+
+```typescript
+const jids = [
+    '123456789@g.us',
+    '987654321@s.whatsapp.net'
+]
+
+// رسالة نصية للحالة
+await sock.sendStatusMentions(
+    {
+        text: 'مرحباً بالجميع 👋',
+        font: 2,
+        textColor: 'FF0000',
+        backgroundColor: '#000000'
+    },
+    jids // حد أقصى 5 إشارات لكل حالة
+)
+
+// صورة للحالة
+await sock.sendStatusMentions(
+    {
+        image: { url: './image.jpg' },
+        caption: 'مرحباً بالجميع 👋'
+    },
+    jids
+)
+
+// فيديو للحالة
+await sock.sendStatusMentions(
+    {
+        video: { url: './video.mp4' },
+        caption: 'مرحباً بالجميع 👋'
+    },
+    jids
+)
+```
+
+### رسائل المتجر
+
+```typescript
+await sock.sendMessage(
+    jid,
+    {
+        text: 'محتوى الرسالة',
+        title: 'عنوان المتجر',
+        subtitle: 'عنوان فرعي',
+        footer: 'تذييل',
+        shop: {
+            surface: 1, // 2 | 3 | 4
+            id: 'https://example.com'
+        },
+        viewOnce: true
+    }
+)
+```
+
+### رسائل المجموعة
+
+```typescript
+await sock.sendMessage(
+    jid,
+    {
+        text: 'محتوى الرسالة',
+        title: 'عنوان المجموعة',
+        subtitle: 'عنوان فرعي',
+        footer: 'تذييل',
+        collection: {
+            bizJid: 'jid',
+            id: 'https://example.com',
+            version: 1
+        },
+        viewOnce: true
+    }
+)
+```
+
+### ميزة أيقونة AI
+
+```typescript
+// استخدام ميزة AI مع sendMessage
+await sock.sendMessage(
+    jid,
+    {
+        text: 'مرحباً، هذه رسالة من AI'
+    },
+    {
+        ai: true
+    }
+)
+
+// استخدام ميزة AI مع relayMessage
+await sock.relayMessage(
+    jid,
+    {
+        extendedTextMessage: {
+            text: 'مرحباً من AI'
+        }
+    },
+    {
+        AI: true // استخدم حروف كبيرة
+    }
+)
+```
+
 ---
 
 ## 🎬 الوسائط المتعددة
+
+> ℹ️ **ملاحظة:** في رسائل الوسائط، يمكنك تمرير `{ stream: Stream }` أو `{ url: Url }` أو `Buffer` مباشرة
+> 
+> 💡 **نصيحة:** يُنصح باستخدام Stream أو Url لتوفير الذاكرة
 
 ### إرسال الصور
 
@@ -369,9 +751,37 @@ await sock.sendMessage(
         caption: 'شاهد هذا الفيديو 🎥'
     }
 )
+
+// فيديو PTV (فيديو دائري)
+await sock.sendMessage(
+    jid,
+    {
+        video: { url: './video.mp4' },
+        ptv: true
+    }
+)
+
+// رسالة GIF (يتم إرسال ملف mp4 مع علامة gifPlayback)
+await sock.sendMessage(
+    jid,
+    {
+        video: { url: './animation.mp4' },
+        caption: 'صورة متحركة 🎬',
+        gifPlayback: true
+    }
+)
 ```
 
 ### إرسال الصوت
+
+> ⚠️ **ملاحظة مهمة:** لكي تعمل الرسائل الصوتية على جميع الأجهزة، يجب تحويلها باستخدام `ffmpeg`:
+> ```bash
+> ffmpeg -i input.mp4 -avoid_negative_ts make_zero -ac 1 output.ogg
+> ```
+> الإعدادات المطلوبة:
+> - codec: libopus (ملف ogg)
+> - ac: 1 (قناة واحدة)
+> - avoid_negative_ts make_zero
 
 ```typescript
 await sock.sendMessage(
@@ -380,6 +790,20 @@ await sock.sendMessage(
         audio: { url: './audio.mp3' },
         mimetype: 'audio/mp4',
         ptt: true // رسالة صوتية
+    }
+)
+```
+
+### إرسال المستندات
+
+```typescript
+await sock.sendMessage(
+    jid,
+    {
+        document: { url: './file.pdf' },
+        mimetype: 'application/pdf',
+        fileName: 'اسم_الملف.pdf',
+        caption: 'هذا مستند مهم'
     }
 )
 ```
@@ -395,15 +819,54 @@ await sock.sendMessage(
 )
 ```
 
+### الألبومات
+
+```typescript
+await sock.sendMessage(
+    jid,
+    {
+        album: [
+            {
+                image: { url: './image1.jpg' },
+                caption: 'الصورة الأولى'
+            },
+            {
+                image: Buffer, // يمكن استخدام Buffer
+                caption: 'الصورة الثانية'
+            },
+            {
+                video: { url: './video1.mp4' },
+                caption: 'فيديو في الألبوم'
+            },
+            {
+                video: Buffer,
+                caption: 'فيديو آخر'
+            }
+        ]
+    }
+)
+```
+
 ### رسائل المشاهدة مرة واحدة
 
 ```typescript
+// يمكنك إرسال أي نوع من الوسائط كـ viewOnce
 await sock.sendMessage(
     jid, 
     { 
         image: { url: './image.jpg' },
         viewOnce: true,
         caption: 'شاهد هذه الصورة مرة واحدة فقط!'
+    }
+)
+
+// يعمل أيضاً مع الفيديو والصوت
+await sock.sendMessage(
+    jid,
+    {
+        video: { url: './video.mp4' },
+        viewOnce: true,
+        caption: 'فيديو يُشاهد مرة واحدة'
     }
 )
 ```
