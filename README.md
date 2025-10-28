@@ -1476,7 +1476,7 @@ await sock.sendMessage(
                 payment_settings: [{ 
                    type: "pix_static_code", 
                    pix_static_code:  { 
-                      merchant_name: 'itsukichann kawaii >\\\\\\<', 
+                      merchant_name: 'M7D Baileys', 
                       key: 'example@m7d-dev.com', 
                       key_type: 'EMAIL' // PHONE || EMAIL || CPF || EVP 
                    } 
