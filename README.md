@@ -160,6 +160,8 @@ connectToWhatsApp()
 - [الاتصال برمز الاقتران](#الاتصال-برمز-الاقتران)
 - [حفظ واستعادة الجلسات](#حفظ-واستعادة-الجلسات)
 - [استقبال السجل الكامل](#استقبال-السجل-الكامل)
+- [إعدادات Socket المهمة](#إعدادات-socket-المهمة)
+- [الدوال المساعدة](#الدوال-المساعدة)
 
 ### 📨 إرسال الرسائل
 - [الرسائل النصية](#الرسائل-النصية)
@@ -169,6 +171,20 @@ connectToWhatsApp()
 - [رسائل الاتصال](#رسائل-الاتصال)
 - [رسائل التفاعل (Reactions)](#رسائل-التفاعل)
 - [الاستطلاعات](#رسائل-الاستطلاع)
+- [تثبيت رسالة](#تثبيت-رسالة)
+- [حفظ رسالة](#حفظ-رسالة)
+- [نتائج الاستطلاع](#نتائج-الاستطلاع)
+- [رسائل المكالمة](#رسائل-المكالمة)
+- [رسائل الأحداث](#رسائل-الأحداث)
+- [رسائل الطلبات](#رسائل-الطلبات)
+- [رسائل المنتجات](#رسائل-المنتجات)
+- [رسائل الدفع](#رسائل-الدفع)
+- [دعوة للدفع](#دعوة-للدفع)
+- [دعوة مسؤول قناة](#دعوة-مسؤول-قناة)
+- [دعوة مجموعة](#دعوة-مجموعة)
+- [حزمة ملصقات](#حزمة-ملصقات)
+- [مشاركة رقم الهاتف](#مشاركة-رقم-الهاتف)
+- [طلب رقم الهاتف](#طلب-رقم-الهاتف)
 - [رسائل الأزرار](#رسائل-الأزرار)
 - [رسائل القوائم](#رسائل-القوائم)
 - [رسائل البطاقات](#رسائل-البطاقات)
@@ -204,10 +220,37 @@ connectToWhatsApp()
 
 ### 🛠️ متقدم
 - [معالجة الأحداث](#معالجة-الأحداث)
+- [فك تشفير تصويتات الاستطلاعات](#فك-تشفير-تصويتات-الاستطلاعات)
 - [تخزين البيانات](#تخزين-البيانات)
 - [تحميل الوسائط](#تحميل-الوسائط)
 - [تعديل الرسائل](#تعديل-الرسائل)
 - [حذف الرسائل](#حذف-الرسائل)
+- [إعادة رفع الوسائط](#إعادة-رفع-الوسائط)
+
+### 📞 إدارة المكالمات
+- [رفض مكالمة](#رفض-مكالمة)
+
+### 📬 إرسال حالة القراءة والحضور
+- [قراءة الرسائل](#قراءة-الرسائل)
+- [تحديث الحضور](#تحديث-الحضور)
+
+### 💬 تعديل المحادثات
+- [أرشفة محادثة](#أرشفة-محادثة)
+- [كتم/إلغاء كتم محادثة](#كتمإلغاء-كتم-محادثة)
+- [تمييز محادثة كمقروءة/غير مقروءة](#تمييز-محادثة-كمقروءةغير-مقروءة)
+- [حذف رسالة لي فقط](#حذف-رسالة-لي-فقط)
+- [حذف محادثة](#حذف-محادثة)
+- [وضع نجمة/إزالة نجمة من رسالة](#وضع-نجمةإزالة-نجمة-من-رسالة)
+- [تفعيل الرسائل المختفية](#تفعيل-الرسائل-المختفية)
+- [مسح الرسائل](#مسح-الرسائل)
+
+### 🔍 استعلامات المستخدمين
+- [التحقق من وجود رقم في واتساب](#التحقق-من-وجود-رقم-في-واتساب)
+- [الحصول على سجل المحادثة](#الحصول-على-سجل-المحادثة)
+- [جلب الحالة](#جلب-الحالة)
+- [جلب صورة الملف الشخصي](#جلب-صورة-الملف-الشخصي)
+- [جلب معلومات الحساب التجاري](#جلب-معلومات-الحساب-التجاري)
+- [جلب حضور المستخدم](#جلب-حضور-المستخدم)
 
 ---
 
@@ -240,11 +283,29 @@ const sock = makeWASocket({
 if (!sock.authState.creds.registered) {
     const number = '201220864180' // رقم الهاتف بدون + أو ()
     const code = await sock.requestPairingCode(number)
+    // يمكنك تخصيص رمز الاقتران: await sock.requestPairingCode(number, 'CODEOTPS')
     console.log('رمز الاقتران:', code)
 }
 ```
 
+### استقبال السجل الكامل
+
+إذا كنت تريد استقبال سجل المحادثات الكامل عند الاتصال:
+
+```typescript
+const sock = makeWASocket({
+    ...otherOpts,
+    // يمكن استخدام Windows أو Ubuntu أيضاً
+    browser: Browsers.macOS('Desktop'),
+    syncFullHistory: true
+})
+```
+
+> 💡 **نصيحة:** استخدام إعداد متصفح سطح المكتب يساعد في استقبال سجل رسائل أكبر
+
 ### حفظ واستعادة الجلسات
+
+#### الطريقة الأولى: useMultiFileAuthState (موصى به)
 
 ```typescript
 import makeWASocket, { useMultiFileAuthState } from '@whiskeysockets/baileys'
@@ -255,6 +316,128 @@ const sock = makeWASocket({ auth: state })
 
 // حفظ بيانات الاعتماد عند التحديث
 sock.ev.on('creds.update', saveCreds)
+```
+
+> ⚠️ **مهم:** يجب حفظ `authState.keys` كلما تم تحديثه (عند إرسال/استقبال رسائل)، وإلا ستواجه مشاكل في وصول الرسائل
+
+#### الطريقة الثانية: useSingleFileAuthState
+
+```typescript
+import makeWASocket, { useSingleFileAuthState } from '@whiskeysockets/baileys'
+
+const { state, saveState } = await useSingleFileAuthState('./auth_info_baileys.json')
+
+const sock = makeWASocket({
+    auth: state,
+    printQRInTerminal: true
+})
+
+sock.ev.on('creds.update', saveState)
+```
+
+#### الطريقة الثالثة: useMongoFileAuthState (لقواعد بيانات MongoDB)
+
+```typescript
+import makeWASocket, { useMongoFileAuthState } from '@whiskeysockets/baileys'
+import { MongoClient } from "mongodb"
+
+// إنشاء اتصال MongoDB
+const connectAuth = async() => {
+    global.client = new MongoClient('mongoURL')
+    global.client.connect(err => {
+        if (err) {
+            console.warn("تحذير: رابط MongoDB غير صالح أو لا يمكن الاتصال.")
+        } else {
+            console.log('تم الاتصال بنجاح بخادم MongoDB')
+        }
+    })
+    await client.connect()
+    const collection = client.db("@itsukichann").collection("sessions")
+    return collection
+}
+
+const Authentication = await connectAuth()
+const { state, saveCreds } = await useMongoFileAuthState(Authentication)
+
+const sock = makeWASocket({
+    auth: state,
+    printQRInTerminal: true
+})
+
+sock.ev.on('creds.update', saveCreds)
+```
+
+### إعدادات Socket المهمة
+
+#### تخزين بيانات المجموعات مؤقتاً (موصى به)
+
+إذا كنت تستخدم المكتبة للمجموعات، يُنصح بشدة بتفعيل التخزين المؤقت لبيانات المجموعات:
+
+```typescript
+import NodeCache from 'node-cache'
+
+const groupCache = new NodeCache({ stdTTL: 5 * 60, useClones: false })
+
+const sock = makeWASocket({
+    cachedGroupMetadata: async (jid) => groupCache.get(jid)
+})
+
+sock.ev.on('groups.update', async ([event]) => {
+    const metadata = await sock.groupMetadata(event.id)
+    groupCache.set(event.id, metadata)
+})
+
+sock.ev.on('group-participants.update', async (event) => {
+    const metadata = await sock.groupMetadata(event.id)
+    groupCache.set(event.id, metadata)
+})
+```
+
+#### تحسين نظام إعادة المحاولة وفك تشفير تصويتات الاستطلاعات
+
+لتحسين إرسال الرسائل وإعادة المحاولة عند حدوث أخطاء، وفك تشفير تصويتات الاستطلاعات:
+
+```typescript
+const sock = makeWASocket({
+    getMessage: async (key) => await getMessageFromStore(key)
+})
+```
+
+> 💡 يجب عليك تنفيذ دالة `getMessageFromStore` للحصول على الرسائل من متجر البيانات الخاص بك
+
+#### استقبال الإشعارات في تطبيق واتساب
+
+إذا كنت تريد استقبال إشعارات على تطبيق واتساب في هاتفك:
+
+```typescript
+const sock = makeWASocket({
+    markOnlineOnConnect: false
+})
+```
+
+### الدوال المساعدة
+
+المكتبة توفر مجموعة من الدوال المساعدة المفيدة:
+
+```typescript
+import {
+    getContentType,
+    getDevice,
+    makeCacheableSignalKeyStore,
+    downloadContentFromMessage
+} from '@whiskeysockets/baileys'
+
+// الحصول على نوع محتوى الرسالة
+const messageType = getContentType(message)
+
+// الحصول على نوع الجهاز من الرسالة
+const device = getDevice(message)
+
+// جعل مخزن المصادقة أسرع
+const authStore = makeCacheableSignalKeyStore(store, logger)
+
+// تحميل محتوى الرسائل
+const stream = await downloadContentFromMessage(message, 'image')
 ```
 
 ---
@@ -344,8 +527,269 @@ await sock.sendMessage(
         poll: {
             name: 'ما رأيك في Baileys-M7D؟',
             values: ['ممتاز', 'جيد', 'يحتاج تحسين'],
-            selectableCount: 1
+            selectableCount: 1,
+            toAnnouncementGroup: false // true للإعلانات
         }
+    }
+)
+```
+
+### تثبيت رسالة
+
+```typescript
+await sock.sendMessage(
+    jid,
+    {
+        pin: {
+            type: 1, // 2 لإلغاء التثبيت
+            time: 86400, // المدة بالثواني (24 ساعة = 86400)
+            key: message.key
+        }
+    }
+)
+```
+
+> 📌 **المدد المتاحة:**
+> - 24 ساعة = 86,400 ثانية
+> - 7 أيام = 604,800 ثانية
+> - 30 يوم = 2,592,000 ثانية
+
+### حفظ رسالة
+
+```typescript
+await sock.sendMessage(
+    jid,
+    {
+        keep: {
+            key: message.key,
+            type: 1 // أو 2
+        }
+    }
+)
+```
+
+### نتائج الاستطلاع
+
+```typescript
+await sock.sendMessage(
+    jid,
+    {
+        pollResult: {
+            name: 'نتائج الاستطلاع',
+            values: [
+                ['الخيار الأول', 1000],
+                ['الخيار الثاني', 2000]
+            ]
+        }
+    }
+)
+```
+
+### رسائل المكالمة
+
+```typescript
+await sock.sendMessage(
+    jid,
+    {
+        call: {
+            name: 'مكالمة صوتية',
+            type: 1 // 2 لمكالمة فيديو
+        }
+    }
+)
+```
+
+### رسائل الأحداث
+
+```typescript
+await sock.sendMessage(
+    jid,
+    {
+        event: {
+            isCanceled: false, // true للإلغاء
+            name: 'لقاء الفريق',
+            description: 'اجتماع مهم لمناقشة المشروع',
+            location: {
+                degreesLatitude: 24.121231,
+                degreesLongitude: 55.1121221,
+                name: 'مكتب الشركة'
+            },
+            call: 'audio', // أو 'video'
+            startTime: 1672531200000, // timestamp
+            endTime: 1672534800000,
+            extraGuestsAllowed: true
+        }
+    }
+)
+```
+
+### رسائل الطلبات
+
+```typescript
+await sock.sendMessage(
+    jid,
+    {
+        order: {
+            orderId: '574xxx',
+            thumbnail: 'صورة_المنتج',
+            itemCount: '3',
+            status: 'INQUIRY', // INQUIRY || ACCEPTED || DECLINED
+            surface: 'CATALOG',
+            message: 'شكراً لطلبك',
+            orderTitle: "طلب جديد",
+            sellerJid: 'seller@s.whatsapp.net',
+            token: 'رمز_التحقق',
+            totalAmount1000: '50000',
+            totalCurrencyCode: 'EGP'
+        }
+    }
+)
+```
+
+### رسائل المنتجات
+
+```typescript
+await sock.sendMessage(
+    jid,
+    {
+        product: {
+            productImage: { url: './product.jpg' }, // أو Buffer
+            productId: 'PROD123',
+            title: 'منتج رائع',
+            description: 'وصف المنتج التفصيلي',
+            currencyCode: 'EGP',
+            priceAmount1000: '25000',
+            retailerId: 'RET001',
+            url: 'https://example.com/product',
+            productImageCount: '3',
+            salePriceAmount1000: '20000'
+        },
+        businessOwnerJid: 'business@s.whatsapp.net'
+    }
+)
+```
+
+### رسائل الدفع
+
+```typescript
+await sock.sendMessage(
+    jid,
+    {
+        payment: {
+            note: 'دفع مقابل الخدمات',
+            currency: 'EGP',
+            offset: 0,
+            amount: '10000',
+            expiry: 0,
+            from: '201220864180@s.whatsapp.net',
+            image: {
+                placeholderArgb: "#FFFFFF",
+                textArgb: "#000000",
+                subtextArgb: "#666666"
+            }
+        }
+    }
+)
+```
+
+### دعوة للدفع
+
+```typescript
+await sock.sendMessage(
+    jid,
+    {
+        paymentInvite: {
+            type: 1, // 1 || 2 || 3
+            expiry: 86400
+        }
+    }
+)
+```
+
+### دعوة مسؤول قناة
+
+```typescript
+await sock.sendMessage(
+    jid,
+    {
+        adminInvite: {
+            jid: '123xxx@newsletter',
+            name: 'قناتي الرسمية',
+            caption: 'انضم كمسؤول في القناة',
+            expiration: 86400,
+            jpegThumbnail: Buffer // اختياري
+        }
+    }
+)
+```
+
+### دعوة مجموعة
+
+```typescript
+await sock.sendMessage(
+    jid,
+    {
+        groupInvite: {
+            jid: '123xxx@g.us',
+            name: 'مجموعة المطورين',
+            caption: 'انضم إلى مجموعتنا',
+            code: 'ABC123XYZ',
+            expiration: 86400,
+            jpegThumbnail: Buffer // اختياري
+        }
+    }
+)
+```
+
+### حزمة ملصقات
+
+```typescript
+await sock.sendMessage(
+    jid,
+    {
+        stickerPack: {
+            name: 'ملصقاتي',
+            publisher: 'بواسطة M7D-DEV',
+            description: 'مجموعة ملصقات رائعة',
+            cover: Buffer, // صورة الغلاف
+            stickers: [
+                {
+                    sticker: { url: 'https://example.com/sticker1.webp' },
+                    emojis: ['😊'],
+                    accessibilityLabel: 'سعيد',
+                    isLottie: false,
+                    isAnimated: false
+                },
+                {
+                    sticker: Buffer,
+                    emojis: ['❤️'],
+                    isLottie: false,
+                    isAnimated: true
+                }
+            ]
+        }
+    }
+)
+```
+
+### مشاركة رقم الهاتف
+
+```typescript
+await sock.sendMessage(
+    jid,
+    {
+        sharePhoneNumber: {}
+    }
+)
+```
+
+### طلب رقم الهاتف
+
+```typescript
+await sock.sendMessage(
+    jid,
+    {
+        requestPhoneNumber: {}
     }
 )
 ```
@@ -1023,6 +1467,54 @@ sock.ev.on('contacts.upsert', (contacts) => {
 })
 ```
 
+### فك تشفير تصويتات الاستطلاعات
+
+لفك تشفير تصويتات الاستطلاعات، يجب استخدام `getAggregateVotesInPollMessage`:
+
+```typescript
+import pino from "pino"
+import { makeInMemoryStore, getAggregateVotesInPollMessage } from '@whiskeysockets/baileys'
+
+const logger = pino({ 
+    timestamp: () => `,"time":"${new Date().toJSON()}"` 
+}).child({ class: "@Itsukichann" })
+
+logger.level = "fatal"
+const store = makeInMemoryStore({ logger })
+
+// دالة للحصول على الرسالة من المخزن
+async function getMessage(key) {
+    if (store) {
+        const msg = await store.loadMessage(key.remoteJid, key.id)
+        return msg?.message
+    }
+    return { conversation: "رسالة افتراضية" }
+}
+
+// معالجة تحديثات الرسائل لفك تشفير الاستطلاعات
+sock.ev.on("messages.update", async (chatUpdate) => {
+    for(const { key, update } of chatUpdate) {
+        if(update.pollUpdates && key.fromMe) {
+            const pollCreation = await getMessage(key)
+            if(pollCreation) {
+                const pollUpdate = await getAggregateVotesInPollMessage({
+                    message: pollCreation,
+                    pollUpdates: update.pollUpdates,
+                })
+                
+                const toCmd = pollUpdate.filter(v => v.voters.length !== 0)[0]?.name
+                if (toCmd == undefined) return
+                
+                console.log('الخيار المختار:', toCmd)
+                console.log('جميع التصويتات:', pollUpdate)
+            }
+        }
+    }
+})
+```
+
+> ⚠️ **ملاحظة:** تصويتات الاستطلاعات مشفرة بشكل افتراضي ويتم التعامل معها في حدث `messages.update`
+
 ### تخزين البيانات
 
 ```typescript
@@ -1089,6 +1581,261 @@ const msg = await sock.sendMessage(jid, { text: 'سيتم حذف هذه الرس
 
 // حذف للجميع
 await sock.sendMessage(jid, { delete: msg.key })
+```
+
+### إعادة رفع الوسائط
+
+إذا كانت الوسائط في رسالة محفوظة قديمة، يمكنك إعادة رفعها:
+
+```typescript
+await sock.updateMediaMessage(message)
+```
+
+---
+
+## 📞 إدارة المكالمات
+
+### رفض مكالمة
+
+```typescript
+await sock.rejectCall(callId, callFrom)
+```
+
+---
+
+## 📬 إرسال حالة القراءة والحضور
+
+### قراءة الرسائل
+
+لتمييز رسائل معينة كمقروءة:
+
+```typescript
+const key = message.key
+await sock.readMessages([key])
+```
+
+### تحديث الحضور
+
+```typescript
+// متاح
+await sock.sendPresenceUpdate('available', jid)
+
+// غير متاح
+await sock.sendPresenceUpdate('unavailable', jid)
+
+// يكتب...
+await sock.sendPresenceUpdate('composing', jid)
+
+// يسجل صوتي...
+await sock.sendPresenceUpdate('recording', jid)
+
+// إيقاف الكتابة
+await sock.sendPresenceUpdate('paused', jid)
+```
+
+> ⚠️ **ملاحظة:** الحضور يختفي بعد 10 ثواني. إذا كان لديك عميل سطح مكتب نشط، لن تصلك إشعارات من واتساب في الهاتف.
+
+---
+
+## 💬 تعديل المحادثات
+
+### أرشفة محادثة
+
+```typescript
+const lastMsgInChat = await getLastMessageInChat(jid) // نفذ هذه الدالة بنفسك
+await sock.chatModify(
+    { 
+        archive: true, 
+        lastMessages: [lastMsgInChat] 
+    }, 
+    jid
+)
+```
+
+### كتم/إلغاء كتم محادثة
+
+```typescript
+// كتم لمدة 8 ساعات
+await sock.chatModify({ mute: 8 * 60 * 60 * 1000 }, jid)
+
+// إلغاء الكتم
+await sock.chatModify({ mute: null }, jid)
+```
+
+### تمييز محادثة كمقروءة/غير مقروءة
+
+```typescript
+const lastMsgInChat = await getLastMessageInChat(jid)
+
+// تمييز كغير مقروءة
+await sock.chatModify(
+    { 
+        markRead: false, 
+        lastMessages: [lastMsgInChat] 
+    }, 
+    jid
+)
+
+// تمييز كمقروءة
+await sock.chatModify(
+    { 
+        markRead: true, 
+        lastMessages: [lastMsgInChat] 
+    }, 
+    jid
+)
+```
+
+### حذف رسالة لي فقط
+
+```typescript
+await sock.chatModify(
+    {
+        clear: {
+            messages: [{
+                id: 'ATWYHDNNWU81732J',
+                fromMe: true,
+                timestamp: '1654823909'
+            }]
+        }
+    },
+    jid
+)
+```
+
+### حذف محادثة
+
+```typescript
+const lastMsgInChat = await getLastMessageInChat(jid)
+await sock.chatModify(
+    {
+        delete: true,
+        lastMessages: [{
+            key: lastMsgInChat.key,
+            messageTimestamp: lastMsgInChat.messageTimestamp
+        }]
+    },
+    jid
+)
+```
+
+### وضع نجمة/إزالة نجمة من رسالة
+
+```typescript
+await sock.chatModify(
+    {
+        star: {
+            messages: [{
+                id: messageId,
+                fromMe: true
+            }],
+            star: true // false لإزالة النجمة
+        }
+    },
+    jid
+)
+```
+
+### تفعيل الرسائل المختفية
+
+```typescript
+// تفعيل - الرسائل تختفي بعد 7 أيام
+await sock.sendMessage(
+    jid,
+    {
+        disappearingMessagesInChat: 7 * 24 * 60 * 60
+    }
+)
+
+// إلغاء التفعيل
+await sock.sendMessage(
+    jid,
+    {
+        disappearingMessagesInChat: false
+    }
+)
+```
+
+### مسح الرسائل
+
+```typescript
+// مسح كل الرسائل
+await sock.chatModify(
+    {
+        clear: {
+            messages: [{ 
+                id: 'messageId', 
+                fromMe: true, 
+                timestamp: 'timestamp' 
+            }]
+        }
+    },
+    jid
+)
+```
+
+---
+
+## 🔍 استعلامات المستخدمين
+
+### التحقق من وجود رقم في واتساب
+
+```typescript
+const [result] = await sock.onWhatsApp("201220864180")
+if (result.exists) {
+    console.log(`${result.jid} موجود على واتساب`)
+}
+```
+
+### الحصول على سجل المحادثة
+
+```typescript
+// آخر 25 رسالة
+const messages = await sock.fetchMessagesFromWA(jid, 25)
+
+// مع التحديد بالرسائل
+const messages = await sock.fetchMessagesFromWA(
+    jid, 
+    25, 
+    { before: message }
+)
+```
+
+### جلب الحالة
+
+```typescript
+const status = await sock.fetchStatus(jid)
+console.log("حالة المستخدم:", status)
+```
+
+### جلب صورة الملف الشخصي
+
+```typescript
+// لمستخدم أو مجموعة
+const ppUrl = await sock.profilePictureUrl(jid, 'image')
+console.log("رابط الصورة:", ppUrl)
+```
+
+### جلب معلومات الحساب التجاري
+
+```typescript
+const profile = await sock.getBusinessProfile(jid)
+console.log('الوصف:', profile.description)
+console.log('الفئة:', profile.category)
+console.log('البريد الإلكتروني:', profile.email)
+console.log('الموقع:', profile.website)
+```
+
+### جلب حضور المستخدم
+
+```typescript
+// الاشتراك في تحديثات الحضور
+await sock.presenceSubscribe(jid)
+
+// الاستماع للتحديثات
+sock.ev.on('presence.update', (update) => {
+    console.log('تحديث الحضور:', update)
+})
 ```
 
 ---
