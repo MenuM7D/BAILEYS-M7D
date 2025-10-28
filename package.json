@@ -1,7 +1,7 @@
 {
   "name": "@whiskeysockets/baileys",
   "version": "7.3.2",
-  "description": "WhatsApp API Modified By M7D-DEV",
+  "description": "مكتبة واتساب ويب API معدلة ومطورة بواسطة M7D-DEV - نسخة عربية احترافية",
   "keywords": [
     "whatsapp",
     "js-whatsapp",
@@ -10,7 +10,14 @@
     "whatsapp-chat",
     "whatsapp-group",
     "automation",
-    "multi-device"
+    "multi-device",
+    "arabic",
+    "baileys-m7d",
+    "m7d-dev",
+    "typescript",
+    "javascript",
+    "واتساب",
+    "عربي"
   ],
   "homepage": "https://github.com/MenuM7D/BAILEYS-M7D",
   "repository": {
@@ -18,7 +25,19 @@
     "url": "git+https://github.com/MenuM7D/BAILEYS-M7D.git"
   },
   "license": "MIT",
-  "author": "M7D-DEV",
+  "author": {
+    "name": "M7D-DEV",
+    "url": "https://m7d-platforms.vercel.app",
+    "whatsapp": "https://wa.me/201220864180",
+    "channel": "https://whatsapp.com/channel/0029ValNLOS7IUYNlsgu9X3w"
+  },
+  "contributors": [
+    {
+      "name": "M7D",
+      "email": "m7d@dev.com",
+      "url": "https://m7d-platforms.vercel.app"
+    }
+  ],
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -97,5 +116,14 @@
   },
   "bugs": {
     "url": "https://github.com/MenuM7D/BAILEYS-M7D/issues"
+  },
+  "funding": {
+    "type": "individual",
+    "url": "https://m7d-platforms.vercel.app"
+  },
+  "support": {
+    "whatsapp": "https://wa.me/201220864180",
+    "channel": "https://whatsapp.com/channel/0029ValNLOS7IUYNlsgu9X3w",
+    "platforms": "https://m7d-platforms.vercel.app"
   }
 }

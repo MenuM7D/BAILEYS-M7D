@@ -1,21 +1,48 @@
-MIT License
+رخصة MIT
 
-Copyright (c) 2024 Itsukichann
+حقوق النشر محفوظة لعام ٢٠٢٥ وما بعده لـ M7D
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+يتم منح الإذن مجانا لأي شخص يحصل على نسخة من هذا البرنامج والملفات
+المرتبطة به للتعامل مع البرنامج دون قيود بما في ذلك على سبيل المثال
+لا الحصر حقوق الاستخدام والنسخ والتعديل والدمج والنشر والتوزيع
+ومنح التراخيص الفرعية وبيع نسخ من البرنامج والسماح للأشخاص الذين
+يتم تزويدهم بالبرنامج بذلك بشرط استيفاء الشروط التالية
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+يجب تضمين إشعار حقوق النشر أعلاه وإشعار الإذن هذا في جميع النسخ
+أو الأجزاء الجوهرية من البرنامج
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+يتم توفير البرنامج كما هو دون ضمان من أي نوع صريحا كان أو ضمنيا
+بما في ذلك على سبيل المثال لا الحصر الضمانات الضمنية للتسويق
+والملاءمة لغرض معين وعدم الانتهاك وفي أي حال من الأحوال لن يكون
+المؤلفون أو أصحاب حقوق النشر مسؤولين عن أي مطالبة أو أضرار أو
+مسؤولية أخرى سواء في دعوى تعاقدية أو تقصيرية أو غير ذلك ناشئة عن
+أو فيما يتعلق بالبرنامج أو استخدام البرنامج أو التعاملات الأخرى
+في البرنامج
+
+ملاحظة مهمة
+
+هذه المكتبة نسخة معدلة من مكتبة Baileys الأصلية
+
+المستودع الأصلي المعدل منه
+github.com/BrunoSobrino/Baileys-Itsukichann
+
+المطور والمعدل
+M7D
+
+للتواصل مع المطور
+
+واتساب
+https://wa.me/201220864180
+
+جميع المنصات
+https://m7d-platforms.vercel.app
+
+قناة واتساب
+https://whatsapp.com/channel/0029ValNLOS7IUYNlsgu9X3w
+
+تنويه قانوني
+
+هذه المكتبة غير مرتبطة أو معتمدة من قبل واتساب أو فيسبوك
+الاستخدام على مسؤوليتك الخاصة ويجب الالتزام بشروط خدمة واتساب
+المطورون غير مسؤولين عن أي سوء استخدام للمكتبة
+يمنع استخدام المكتبة في الرسائل المزعجة أو التطفل أو الرسائل الجماعية غير المرغوبة
