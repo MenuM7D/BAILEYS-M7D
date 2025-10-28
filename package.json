@@ -1,7 +1,7 @@
 {
-  "name": "@itsukichan/baileys",
+  "name": "@whiskeysockets/baileys",
   "version": "7.3.2",
-  "description": "WhatsApp API Modification By Itsukiichan",
+  "description": "WhatsApp API Modified By M7D-DEV",
   "keywords": [
     "whatsapp",
     "js-whatsapp",
@@ -12,13 +12,13 @@
     "automation",
     "multi-device"
   ],
-  "homepage": "https://github.com/Itsukichann/Baileys",
+  "homepage": "https://github.com/MenuM7D/BAILEYS-M7D",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/Itsukichann/Baileys.git"
+    "url": "git+https://github.com/MenuM7D/BAILEYS-M7D.git"
   },
   "license": "MIT",
-  "author": "Itsukichann",
+  "author": "M7D-DEV",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -96,6 +96,6 @@
     "lib": "lib"
   },
   "bugs": {
-    "url": "https://github.com/Itsukichann/Baileys/issues"
+    "url": "https://github.com/MenuM7D/BAILEYS-M7D/issues"
   }
 }
